@@ -15,6 +15,7 @@ def print_prompt(prompt: str):
     with open('temp.sh', 'w') as f:
         f.write(prompt)
     os.system('bat temp.sh')
+    os.remove('temp.sh')
     # print(Fore.LIGHTBLACK_EX + '\n| Prompt: ')
     # print(Fore.LIGHTBLACK_EX + '------------------------------')
     # print(Fore.CYAN + indent_multiline_string(prompt))
