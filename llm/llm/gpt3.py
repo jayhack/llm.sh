@@ -29,8 +29,6 @@ Write a bash script that will concatenate all CSVs that start with "test-" in my
 # create a new file called 'result.csv' and concatenate all files starting with 'test-' into it
 cat test-*.csv > result.csv
 ```
-{prompt}
-```
 
 create an empty CSV called results.csv with a name and email column
 ```
@@ -67,7 +65,7 @@ class GPT3(object):
 
     @staticmethod
     def _generate(prompt: str) -> str:
-        print(Fore.LIGHTBLACK_EX + '\n[GPT3] Generating...')
+        # print(Fore.LIGHTBLACK_EX + '\n[GPT3] Generating...')
         response = openai.Completion.create(
             model="code-davinci-002",
             prompt=prompt,
@@ -81,6 +79,7 @@ class GPT3(object):
 
     @classmethod
     def generate_code(cls, prompt: str) -> str:
+        # return test_data
         prompt_formatted = format_prompt(prompt)
         raw_gen = cls._generate(prompt_formatted)
         code_str = raw_gen.split('```')[0].strip()
