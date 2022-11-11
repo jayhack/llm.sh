@@ -1,7 +1,4 @@
-from colorama import Fore
 import openai
-
-openai.api_key = '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'
 
 prompt_str = """
 Write a bash script with comments that will delete all files in my current directory:
@@ -63,9 +60,12 @@ def format_prompt(prompt: str) -> str:
 
 class GPT3(object):
 
+    def __init__(self, key):
+        self.key = key
+        openai.api_key = key
+
     @staticmethod
     def _generate(prompt: str) -> str:
-        # print(Fore.LIGHTBLACK_EX + '\n[GPT3] Generating...')
         response = openai.Completion.create(
             model="code-davinci-002",
             prompt=prompt,
@@ -79,7 +79,6 @@ class GPT3(object):
 
     @classmethod
     def generate_code(cls, prompt: str) -> str:
-        # return test_data
         prompt_formatted = format_prompt(prompt)
         raw_gen = cls._generate(prompt_formatted)
         code_str = raw_gen.split('```')[0].strip()
