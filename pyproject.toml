@@ -20,4 +20,7 @@ halo = "^0.0.31"
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
+[tool.poetry.scripts]
+llm = "src.main:main"
+
 

@@ -1,7 +1,7 @@
 import os
 import sys
 from gpt3 import GPT3
-from colorama import Fore, Back, Style
+from colorama import Fore
 from halo import Halo
 
 spinner = Halo(text='Querying GPT-3', spinner='dots')
@@ -65,6 +65,13 @@ def process(openai_key: str):
     else:
         print(Fore.LIGHTBLACK_EX + 'Aborted.')
 
+def main():
+    openai_key = get_openai_key()
+    if openai_key is None:
+        print(Fore.RED + '>> OpenAI API key not found.')
+        set_openai_key()
+        openai_key = get_openai_key()
+    process(openai_key)
 
 if __name__ == '__main__':
     openai_api_key = get_openai_key()

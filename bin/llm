@@ -1,0 +1,11 @@
+#!/usr/bin/env python
+from llm import get_openai_key, set_openai_key, process
+from colorama import Fore
+
+if __name__ == '__main__':
+    openai_api_key = get_openai_key()
+    if not openai_api_key:
+        print(Fore.RED + '>> OpenAI API key not found.')
+        set_openai_key()
+    process(openai_api_key)
+
