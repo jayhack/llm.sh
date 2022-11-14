@@ -65,6 +65,7 @@ def process(openai_key: str):
     else:
         print(Fore.LIGHTBLACK_EX + 'Aborted.')
 
+
 def main():
     openai_key = get_openai_key()
     if openai_key is None:
@@ -72,6 +73,7 @@ def main():
         set_openai_key()
         openai_key = get_openai_key()
     process(openai_key)
+
 
 if __name__ == '__main__':
     openai_api_key = get_openai_key()
