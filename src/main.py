@@ -1,6 +1,6 @@
 import os
 import sys
-from gpt3 import GPT3
+from .gpt3 import GPT3
 from colorama import Fore
 from halo import Halo
 
