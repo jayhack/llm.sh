@@ -3,6 +3,9 @@
 Copilot for your command line. Just type `llm XYZ` and it will generate/run a script for you that does XYZ.
 
 # Installation
+
+Get an OpenAI API Key here: https://beta.openai.com/signup/
+
 Install bat (https://github.com/sharkdp/bat#installation), a better cat alternative
 ```
 ~$: port install bat # or brew install bat - 
