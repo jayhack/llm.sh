@@ -1,4 +1,4 @@
-# LLM.sh
+# LLM.sh 🤖 💻
 
 Copilot for your command line. Just type `llm XYZ` and it will generate/run a script for you that does XYZ.
 
