@@ -1,35 +1,10 @@
 import os
 import sys
-from .gpt3 import GPT3
+import requests
 from colorama import Fore
 from halo import Halo
 
 spinner = Halo(text='Querying GPT-3', spinner='dots')
-
-
-def get_dotfile_path():
-    return os.path.expanduser('~/.llm.sh')
-
-
-def get_openai_key():
-    """Gets the OpenAI API key from the ~/.llm.sh file"""
-    dotfile_path = get_dotfile_path()
-    if not os.path.exists(dotfile_path):
-        return None
-    with open(dotfile_path, 'r') as f:
-        for line in f:
-            if line.startswith('OPENAI_API_KEY'):
-                return line.split('=')[1].strip()
-    return None
-
-
-def set_openai_key():
-    """Sets the OpenAI API key in the ~/.llm.sh file"""
-    dotfile_path = get_dotfile_path()
-    key = input(Fore.RED + '>> Enter your OpenAI key: ')
-    with open(dotfile_path, 'w+') as f:
-        f.write(f'OPENAI_API_KEY={key}')
-    print(Fore.LIGHTBLACK_EX + 'Key saved.')
 
 
 def print_prompt(prompt: str):
@@ -49,14 +24,23 @@ def run_bash_file_from_string(s: str):
 
 
 @Halo(text='Querying GPT-3', spinner='dots')
-def model_query(openai_key: str, prompt: str) -> str:
-    gpt3 = GPT3(openai_key)
-    return gpt3.generate_code(prompt)
+def model_query(prompt: str):
+    data = {
+        "input": prompt
+    }
+    headers = {"Authorization": "Basic clb76yfe1056trk1al1zq2h0w"}
+    response = requests.post(
+        "https://dashboard.scale.com/spellbook/api/app/8r493dlh",
+        json=data,
+        headers=headers
+    )
+    text = response.json()['text']
+    return text
 
 
-def process(openai_key: str):
+def process():
     prompt = ' '.join(sys.argv[1:])
-    result = model_query(openai_key, prompt)
+    result = model_query(prompt)
     print_prompt(result)
     response = input(Fore.RED + '>> Do you want to run this program? [Y/n] ')
     if response == '' or response.lower() == 'y':
@@ -67,17 +51,8 @@ def process(openai_key: str):
 
 
 def main():
-    openai_key = get_openai_key()
-    if openai_key is None:
-        print(Fore.RED + '>> OpenAI API key not found.')
-        set_openai_key()
-        openai_key = get_openai_key()
-    process(openai_key)
+    process()
 
 
 if __name__ == '__main__':
-    openai_api_key = get_openai_key()
-    if not openai_api_key:
-        print(Fore.RED + '>> OpenAI API key not found.')
-        set_openai_key()
-    process(openai_api_key)
+    process()
