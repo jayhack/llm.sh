@@ -26,7 +26,7 @@ def run_bash_file_from_string(s: str):
 @Halo(text='Querying GPT-3', spinner='dots')
 def model_query(prompt: str) -> str:
     data = {
-        "input": ""
+        "input": prompt
     }
     headers = {"Authorization": "Basic clb76yfe1056trk1al1zq2h0w"}
     response = requests.post(
@@ -34,6 +34,7 @@ def model_query(prompt: str) -> str:
         json=data,
         headers=headers
     )
+    print(response.status_code)
     return response.json()['text']
 
 
