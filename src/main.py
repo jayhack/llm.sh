@@ -1,8 +1,9 @@
 import os
 import sys
+
+import requests
 from colorama import Fore
 from halo import Halo
-import requests
 
 spinner = Halo(text='Querying GPT-3', spinner='dots')
 
@@ -41,6 +42,9 @@ def model_query(prompt: str) -> str:
 def process():
     prompt = ' '.join(sys.argv[1:])
     result = model_query(prompt)
+    # Monkey patch: if result last line start with ``` remove the last line
+    if result.splitlines()[-1].startswith('```'):
+        result = '\n'.join(result.splitlines()[:-1])
     print_prompt(result)
     response = input(Fore.RED + '>> Do you want to run this program? [Y/n] ')
     if response == '' or response.lower() == 'y':
