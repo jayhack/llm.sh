@@ -35,7 +35,7 @@ def model_query(prompt: str) -> str:
         headers=headers
     )
     print(response.status_code)
-    return response.json()['text']
+    return response.json()['text'][:-3].strip()
 
 
 def process():
