@@ -19,7 +19,10 @@ def run_bash_file_from_string(s: str):
     """Runs a bash script from a string"""
     with open('temp.sh', 'w') as f:
         f.write(s)
-    os.system('bash temp.sh')
+    if os.name == 'nt':  # Windows systems
+        os.system('powershell.exe .\\temp.sh')
+    else:  # Unix/Linux systems
+        os.system('bash temp.sh')
     os.remove('temp.sh')
 
 
